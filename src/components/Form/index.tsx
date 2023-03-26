@@ -1,11 +1,11 @@
 import React from "react";
 import Button from "../Button";
-
+import "./style.scss";
 
 class Form extends React.Component {
 	render(): React.ReactNode {
 		return (
-			<form>
+			<form className="newTaskForm">
 				<div>
 					<label htmlFor="task">
 						Add a new study task
