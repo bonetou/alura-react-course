@@ -10,12 +10,13 @@ export default function Item({id, task, time, selected, completed, selectTask}: 
     return (
         <li 
             className={`${ListStyle.item} ${selected ? ListStyle.itemSelected : ''}`}
-            onClick={() => selectTask(
+            onClick={() => !completed && selectTask(
                 {id, task, time, selected: true, completed}
             )}
         >
             <h3> {task} </h3>
             <span> {time} </span>
+            {completed && <span className={ListStyle.completed} aria-label="task completed"></span>}
         </li>
     )
 }

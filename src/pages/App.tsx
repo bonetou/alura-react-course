@@ -7,7 +7,7 @@ import style from './App.module.scss'
 
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([])
-  const [selected, setSelected] = useState<ITask | null>(null)
+  const [selected, setSelected] = useState<ITask | undefined>(undefined)
 
   function selectTask(selectedTask: ITask) {
     setSelected(selectedTask)
@@ -16,7 +16,22 @@ function App() {
       selected: task.id === selectedTask.id
     })))
   }
-
+  
+  function completTask() {
+    if(selected) {
+      setSelected(undefined);
+      setTasks(oldTask => oldTask.map(task => {
+        if(task.id === selected.id) {
+          return {
+            ...task,
+            selected: false,
+            completed: true
+          }
+        }
+        return task;
+      }))
+    }
+  }
   return (
     <div className={style.AppStyle}>
       <Form setTasks={setTasks}/>
@@ -24,7 +39,10 @@ function App() {
         tasks={tasks}
         selectTask={selectTask}
       />
-      <Timer />
+      <Timer
+        selected={selected}
+        completTask={completTask}
+      />
     </div>
   )
 }
