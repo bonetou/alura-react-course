@@ -2,6 +2,7 @@ import React from "react";
 import { ITask } from "../../types/task";
 import Button from "../Button";
 import FormStyle from "./Form.module.scss";
+import { v4 as uuidv4 } from "uuid";
 
 
 class Form extends React.Component<{
@@ -11,13 +12,25 @@ class Form extends React.Component<{
 		task: "",
 		time: "00:00:00",
 	}
-	saveTask(event: React.FormEvent<HTMLFormElement>) {
+	addTask(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault()
-		this.props.setTasks(oldTasks => [...oldTasks, {...this.state}])
+		this.props.setTasks(
+			oldTasks => 
+			[
+				...oldTasks, 
+				{
+					...this.state,
+					selected: false,
+					completed: false,
+					id: uuidv4(),
+				}
+			]
+		)
+		this.setState({task: "", time: "00:00:00"})
 	}
 	render(): React.ReactNode {
 		return (
-			<form className={FormStyle.newTaskForm} onSubmit={this.saveTask.bind(this)}>
+			<form className={FormStyle.newTaskForm} onSubmit={this.addTask.bind(this)}>
 				<div className={FormStyle.inputContainer}>
 					<label htmlFor="task">
 						Add a new study task
