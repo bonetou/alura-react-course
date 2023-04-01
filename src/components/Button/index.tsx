@@ -7,10 +7,13 @@ interface IProps {
 }
 
 
-class Button extends React.Component<IProps> {
+class Button extends React.Component<IProps & {
+  type?: "button" | "submit" | "reset" | undefined
+}> {
   render(): React.ReactNode {
+    const { type = "button" } = this.props
     return (
-      <button className={ButtonStyle.button}>
+      <button type={type} className={ButtonStyle.button}>
         {this.props.children}
       </button>
     )
